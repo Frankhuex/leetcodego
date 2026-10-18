@@ -1,20 +1,20 @@
-type Node struct {
-	Prev *Node
-	Next *Node
+type CacheNode struct {
+	Prev *CacheNode
+	Next *CacheNode
 	Key  int
 	Val  int
 }
 
 type LRUCache struct {
-	Head     *Node
-	Tail     *Node
-	M        map[int]*Node
+	Head     *CacheNode
+	Tail     *CacheNode
+	M        map[int]*CacheNode
 	Capacity int
 }
 
 func Constructor(capacity int) LRUCache {
 	return LRUCache{
-		M:        make(map[int]*Node, capacity),
+		M:        make(map[int]*CacheNode, capacity),
 		Capacity: capacity,
 	}
 }
@@ -32,7 +32,7 @@ func (this *LRUCache) Put(key int, value int) {
 		node.Val = value
 		this.MoveToHead(node)
 	} else {
-		node := &Node{
+		node := &CacheNode{
 			Prev: nil,
 			Next: this.Head,
 			Key:  key,
@@ -54,7 +54,7 @@ func (this *LRUCache) Put(key int, value int) {
 	}
 }
 
-func (this *LRUCache) MoveToHead(node *Node) {
+func (this *LRUCache) MoveToHead(node *CacheNode) {
 	prev := node.Prev
 	next := node.Next
 	if node == this.Head {
